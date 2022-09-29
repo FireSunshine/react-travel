@@ -4,25 +4,37 @@ import logo from "../../assets/images/logo.svg";
 import { UserOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Input, Layout, Menu, Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles["app-header"]}>
       <Layout.Header className={styles["main-header"]}>
-        <img src={logo} alt="" className={styles["App-logo"]} />
-        <Typography.Title level={2} className={styles.title}>
-          React Travel
-        </Typography.Title>
+        <span onClick={() => navigate("/")} className={styles["go-home"]}>
+          <img src={logo} alt="" className={styles["App-logo"]} />
+          <Typography.Title level={2} className={styles.title}>
+            React Travel
+          </Typography.Title>
+        </span>
         <Input.Search
           placeholder="想去哪"
           enterButton
           className={styles["search-input"]}
         />
         <Button.Group className={styles["button-group"]}>
-          <Button icon={<UserOutlined />} style={{ borderRadius: "25px" }}>
+          <Button
+            icon={<UserOutlined />}
+            style={{ borderRadius: "25px" }}
+            onClick={() => navigate("signin")}
+          >
             请登录
           </Button>
-          <Button style={{ margin: "0 15px" }} type="text">
+          <Button
+            style={{ margin: "0 15px" }}
+            type="text"
+            onClick={() => navigate("register")}
+          >
             注册
           </Button>
           <Dropdown.Button
