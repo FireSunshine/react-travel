@@ -13,8 +13,12 @@ import sideImage from "../../assets/images/sider_2019_12-09.png";
 import sideImage2 from "../../assets/images/sider_2019_02-04.png";
 import sideImage3 from "../../assets/images/sider_2019_02-04-2.png";
 import styles from "./HomePage.module.css";
+import { withTranslation, WithTranslation } from "react-i18next";
+import styled from "@emotion/styled";
 
-export const HomePage = () => {
+const HomePageComponent: React.FC<WithTranslation> = (props) => {
+  // 高阶组件
+  const { t } = props;
   return (
     <div>
       <Header />
@@ -29,27 +33,27 @@ export const HomePage = () => {
         </Row>
         <ProductCollection
           title={
-            <Typography.Title level={3} type="danger">
-              爆款推荐
-            </Typography.Title>
+            <Title level={3} type="danger">
+              {t("home_page.hot_recommended")}
+            </Title>
           }
           sideImage={sideImage}
           products={productList1}
         />
         <ProductCollection
           title={
-            <Typography.Title level={3} type="danger">
-              新品上市
-            </Typography.Title>
+            <Title level={3} type="danger">
+              {t("home_page.new_arrival")}
+            </Title>
           }
           sideImage={sideImage2}
           products={productList2}
         />
         <ProductCollection
           title={
-            <Typography.Title level={3} type="danger">
-              国内游推荐
-            </Typography.Title>
+            <Title level={3} type="danger">
+              {t("home_page.domestic_travel")}
+            </Title>
           }
           sideImage={sideImage3}
           products={productList3}
@@ -60,3 +64,9 @@ export const HomePage = () => {
     </div>
   );
 };
+
+export const HomePage = withTranslation()(HomePageComponent);
+
+export const Title = styled(Typography.Title)`
+  font-family: "IBMPlexSerif-BoldItalic";
+`;

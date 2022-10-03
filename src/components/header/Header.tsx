@@ -1,20 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import logo from "../../assets/images/logo.svg";
 import { UserOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Input, Layout, Menu, Typography } from "antd";
+import {
+  Button,
+  Dropdown,
+  Input,
+  Layout,
+  Menu,
+  message,
+  Typography,
+} from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "../../redux/hooks";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import {
+  addLanguageActionCreator,
+  changeLanguageActionCreator,
+} from "../../redux/language/languageAction";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const language = useSelector((state) => state.language);
+  const langeuageList = useSelector((state) => state.languageList);
+  const [langeuageArr, setLangeuageArr] =
+    useState<{ label: string; key: string }[]>();
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setLangeuageArr([
+      ...langeuageList.map((l) => {
+        return {
+          label: l.name,
+          key: l.code,
+        };
+      }),
+      { label: "添加新语言", key: "new" },
+    ]);
+  }, [langeuageList]);
+
+  const menuClickHandler = (e) => {
+    if (e.key.includes("new_lange")) {
+      message.info("暂不支持新语言");
+      return;
+    } else if (e.key === "new") {
+      dispatch(
+        addLanguageActionCreator("新语言", `new_lange_${new Date().getTime()}`)
+      );
+    } else {
+      dispatch(changeLanguageActionCreator(e.key));
+    }
+  };
+
   return (
     <div className={styles["app-header"]}>
       <Layout.Header className={styles["main-header"]}>
         <span onClick={() => navigate("/")} className={styles["go-home"]}>
           <img src={logo} alt="" className={styles["App-logo"]} />
           <Typography.Title level={2} className={styles.title}>
-            React Travel
+            {t("header.title")}
           </Typography.Title>
         </span>
         <Input.Search
@@ -28,25 +75,20 @@ export const Header = () => {
             style={{ borderRadius: "25px" }}
             onClick={() => navigate("signin")}
           >
-            请登录
+            {t("header.signin")}
           </Button>
           <Button
             style={{ margin: "0 15px" }}
             type="text"
             onClick={() => navigate("register")}
           >
-            注册
+            {t("header.register")}
           </Button>
           <Dropdown.Button
-            overlay={
-              <Menu>
-                <Menu.Item key={"zh"}>中文</Menu.Item>
-                <Menu.Item key={"en"}>English</Menu.Item>
-              </Menu>
-            }
+            overlay={<Menu items={langeuageArr} onClick={menuClickHandler} />}
             icon={<GlobalOutlined />}
           >
-            语言
+            {language === "zh" ? "中文" : "English"}
           </Dropdown.Button>
         </Button.Group>
       </Layout.Header>
