@@ -25,51 +25,51 @@ export const ProductCollection: React.FC<PropsTypes> = ({
           <Row>
             <Col span={12}>
               <ProductImage
-                id={products[0].id}
+                id={products?.[0]?.id}
                 size={"large"}
-                title={products[0].title}
-                imageSrc={products[0].touristRoutePictures[0].url}
-                price={products[0].price}
+                title={products?.[0]?.name}
+                imageSrc={products?.[0]?.images}
+                price={products?.[0]?.price}
               />
             </Col>
             <Col span={12}>
               <Row>
                 <Col span={12}>
                   <ProductImage
-                    id={products[1].id}
+                    id={products?.[1]?.id}
                     size={"small"}
-                    title={products[1].title}
-                    imageSrc={products[1].touristRoutePictures[0].url}
-                    price={products[1].price}
+                    title={products?.[1]?.name}
+                    imageSrc={products?.[1]?.images}
+                    price={products?.[1]?.price}
                   />
                 </Col>
                 <Col span={12}>
                   <ProductImage
-                    id={products[2].id}
+                    id={products?.[2]?.id}
                     size={"small"}
-                    title={products[2].title}
-                    imageSrc={products[2].touristRoutePictures[0].url}
-                    price={products[2].price}
+                    title={products?.[2]?.name}
+                    imageSrc={products?.[2]?.images}
+                    price={products?.[2]?.price}
                   />
                 </Col>
               </Row>
               <Row>
                 <Col span={12}>
                   <ProductImage
-                    id={products[3].id}
+                    id={products?.[3]?.id}
                     size={"small"}
-                    title={products[3].title}
-                    imageSrc={products[3].touristRoutePictures[0].url}
-                    price={products[3].price}
+                    title={products?.[3]?.name}
+                    imageSrc={products?.[3]?.images}
+                    price={products?.[3]?.price}
                   />
                 </Col>
                 <Col span={12}>
                   <ProductImage
-                    id={products[4].id}
+                    id={products?.[4]?.id}
                     size={"small"}
-                    title={products[4].title}
-                    imageSrc={products[4].touristRoutePictures[0].url}
-                    price={products[4].price}
+                    title={products?.[4]?.name}
+                    imageSrc={products?.[4]?.images}
+                    price={products?.[4]?.price}
                   />
                 </Col>
               </Row>
@@ -78,38 +78,38 @@ export const ProductCollection: React.FC<PropsTypes> = ({
           <Row>
             <Col span={6}>
               <ProductImage
-                id={products[4].id}
+                id={products?.[5]?.id}
                 size={"small"}
-                title={products[4].title}
-                imageSrc={products[4].touristRoutePictures[0].url}
-                price={products[4].price}
+                title={products?.[5]?.name}
+                imageSrc={products?.[5]?.images}
+                price={products?.[5]?.price}
               />
             </Col>
             <Col span={6}>
               <ProductImage
-                id={products[4].id}
+                id={products?.[6]?.id}
                 size={"small"}
-                title={products[4].title}
-                imageSrc={products[4].touristRoutePictures[0].url}
-                price={products[4].price}
+                title={products?.[6]?.name}
+                imageSrc={products?.[6]?.images}
+                price={products?.[6]?.price}
               />
             </Col>
             <Col span={6}>
               <ProductImage
-                id={products[4].id}
+                id={products?.[7]?.id}
                 size={"small"}
-                title={products[4].title}
-                imageSrc={products[4].touristRoutePictures[0].url}
-                price={products[4].price}
+                title={products?.[7]?.name}
+                imageSrc={products?.[7]?.images}
+                price={products?.[7]?.price}
               />
             </Col>
             <Col span={6}>
               <ProductImage
-                id={products[4].id}
+                id={products?.[8]?.id}
                 size={"small"}
-                title={products[4].title}
-                imageSrc={products[4].touristRoutePictures[0].url}
-                price={products[4].price}
+                title={products?.[8]?.name}
+                imageSrc={products?.[8]?.images}
+                price={products?.[8]?.price}
               />
             </Col>
           </Row>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Typography } from "antd";
 import {
   Header,
@@ -8,17 +8,37 @@ import {
   ProductCollection,
   BusinessPartners,
 } from "../../components";
-import { productList1, productList2, productList3 } from "./mockups";
+// import { productList1, productList2, productList3 } from "./mockups";
 import sideImage from "../../assets/images/sider_2019_12-09.png";
 import sideImage2 from "../../assets/images/sider_2019_02-04.png";
 import sideImage3 from "../../assets/images/sider_2019_02-04-2.png";
 import styles from "./HomePage.module.css";
 import { withTranslation, WithTranslation } from "react-i18next";
 import styled from "@emotion/styled";
+import axios from "axios";
 
 const HomePageComponent: React.FC<WithTranslation> = (props) => {
   // 高阶组件
   const { t } = props;
+
+  const [productList, setProductList] = useState<any>({
+    productList1: [],
+    productList2: [],
+    productList3: [],
+  });
+
+  useEffect(() => {
+    axios
+      .post("http://127.0.0.1:7001/api/product/lists")
+      .then(({ data: { data } }) => {
+        setProductList({
+          productList1: data.filter((item) => item.categoryId === "1"),
+          productList2: data.filter((item) => item.categoryId === "2"),
+          productList3: data.filter((item) => item.categoryId === "3"),
+        });
+      });
+  }, []);
+
   return (
     <div>
       <Header />
@@ -38,7 +58,7 @@ const HomePageComponent: React.FC<WithTranslation> = (props) => {
             </Title>
           }
           sideImage={sideImage}
-          products={productList1}
+          products={productList.productList1}
         />
         <ProductCollection
           title={
@@ -47,7 +67,7 @@ const HomePageComponent: React.FC<WithTranslation> = (props) => {
             </Title>
           }
           sideImage={sideImage2}
-          products={productList2}
+          products={productList.productList2}
         />
         <ProductCollection
           title={
@@ -56,7 +76,7 @@ const HomePageComponent: React.FC<WithTranslation> = (props) => {
             </Title>
           }
           sideImage={sideImage3}
-          products={productList3}
+          products={productList.productList3}
         />
         <BusinessPartners />
       </div>

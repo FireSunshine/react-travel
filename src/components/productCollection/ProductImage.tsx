@@ -17,6 +17,8 @@ export const ProductImage: React.FC<PropsType> = ({
   price,
   title,
 }) => {
+  console.log(id, size, imageSrc, price, title);
+
   return (
     <Link to={`detail/${id}`}>
       {size === "large" ? (
@@ -25,7 +27,9 @@ export const ProductImage: React.FC<PropsType> = ({
         <Image src={imageSrc} height={120} width={240} />
       )}
       <div>
-        <Typography.Text type="secondary">{title.slice(0, 24)}</Typography.Text>
+        <Typography.Text type="secondary">
+          {title?.slice(0, 24)}
+        </Typography.Text>
         <Typography.Text type="danger">¥ {price} 起</Typography.Text>
       </div>
     </Link>
