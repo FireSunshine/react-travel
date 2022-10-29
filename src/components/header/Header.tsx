@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Header.module.css";
-import logo from "../../assets/images/logo.svg";
-import { UserOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Dropdown,
-  Input,
-  Layout,
-  Menu,
-  message,
-  Typography,
-} from "antd";
-import { GlobalOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "../../redux/hooks";
-import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import {
-  addLanguageActionCreator,
-  changeLanguageActionCreator,
-} from "../../redux/language/languageAction";
+import React, { useState, useEffect } from 'react';
+import styles from './Header.module.css';
+import logo from '../../assets/images/logo.svg';
+import { UserOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Input, Layout, Menu, message, Typography } from 'antd';
+import { GlobalOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from '../../redux/hooks';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { addLanguageActionCreator, changeLanguageActionCreator } from '../../redux/language/languageAction';
 
 export const Header = () => {
   const navigate = useNavigate();
-  const language = useSelector((state) => state.language);
-  const langeuageList = useSelector((state) => state.languageList);
-  const [langeuageArr, setLangeuageArr] =
-    useState<{ label: string; key: string }[]>();
+  const language = useSelector((state) => state.language.language);
+  const langeuageList = useSelector((state) => state.language.languageList);
+  const [langeuageArr, setLangeuageArr] = useState<{ label: string; key: string }[]>();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -35,60 +23,43 @@ export const Header = () => {
       ...langeuageList.map((l) => {
         return {
           label: l.name,
-          key: l.code,
+          key: l.code
         };
       }),
-      { label: "添加新语言", key: "new" },
+      { label: '添加新语言', key: 'new' }
     ]);
   }, [langeuageList]);
 
   const menuClickHandler = (e) => {
-    if (e.key.includes("new_lange")) {
-      message.info("暂不支持新语言");
+    if (e.key.includes('new_lange')) {
+      message.info('暂不支持新语言');
       return;
-    } else if (e.key === "new") {
-      dispatch(
-        addLanguageActionCreator("新语言", `new_lange_${new Date().getTime()}`)
-      );
+    } else if (e.key === 'new') {
+      dispatch(addLanguageActionCreator('新语言', `new_lange_${new Date().getTime()}`));
     } else {
       dispatch(changeLanguageActionCreator(e.key));
     }
   };
 
   return (
-    <div className={styles["app-header"]}>
-      <Layout.Header className={styles["main-header"]}>
-        <span onClick={() => navigate("/")} className={styles["go-home"]}>
-          <img src={logo} alt="" className={styles["App-logo"]} />
+    <div className={styles['app-header']}>
+      <Layout.Header className={styles['main-header']}>
+        <span onClick={() => navigate('/')} className={styles['go-home']}>
+          <img src={logo} alt="" className={styles['App-logo']} />
           <Typography.Title level={2} className={styles.title}>
-            {t("header.title")}
+            {t('header.title')}
           </Typography.Title>
         </span>
-        <Input.Search
-          placeholder="想去哪"
-          enterButton
-          className={styles["search-input"]}
-        />
-        <Button.Group className={styles["button-group"]}>
-          <Button
-            icon={<UserOutlined />}
-            style={{ borderRadius: "25px" }}
-            onClick={() => navigate("signin")}
-          >
-            {t("header.signin")}
+        <Input.Search placeholder="想去哪" enterButton className={styles['search-input']} />
+        <Button.Group className={styles['button-group']}>
+          <Button icon={<UserOutlined />} style={{ borderRadius: '25px' }} onClick={() => navigate('signin')}>
+            {t('header.signin')}
           </Button>
-          <Button
-            style={{ margin: "0 15px" }}
-            type="text"
-            onClick={() => navigate("register")}
-          >
-            {t("header.register")}
+          <Button style={{ margin: '0 15px' }} type="text" onClick={() => navigate('register')}>
+            {t('header.register')}
           </Button>
-          <Dropdown.Button
-            overlay={<Menu items={langeuageArr} onClick={menuClickHandler} />}
-            icon={<GlobalOutlined />}
-          >
-            {language === "zh" ? "中文" : "English"}
+          <Dropdown.Button overlay={<Menu items={langeuageArr} onClick={menuClickHandler} />} icon={<GlobalOutlined />}>
+            {language === 'zh' ? '中文' : 'English'}
           </Dropdown.Button>
         </Button.Group>
       </Layout.Header>
