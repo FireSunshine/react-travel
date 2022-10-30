@@ -7,14 +7,9 @@ import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
 import styles from './HomePage.module.css';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { RootStore } from '../../redux/store';
-import {
-  fetchRecommendProductFailActionCreator,
-  fetchRecommendProductStartActionCreator,
-  fetchRecommendProductSuccessActionCreator
-} from '../../redux/recommendProducts/recommendProductsActions';
+import { getProductActionCreateor } from '../../redux/recommendProducts/recommendProductsActions';
 
 const mapStateToProps = (state: RootStore) => {
   return {
@@ -26,14 +21,8 @@ const mapStateToProps = (state: RootStore) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchStart: () => {
-      dispatch(fetchRecommendProductStartActionCreator());
-    },
-    fetchSuccess: (data) => {
-      dispatch(fetchRecommendProductSuccessActionCreator(data));
-    },
-    fetchFail: (error) => {
-      dispatch(fetchRecommendProductFailActionCreator(error));
+    getProductLists: () => {
+      dispatch(getProductActionCreateor());
     }
   };
 };
@@ -42,16 +31,10 @@ type PropsType = WithTranslation & ReturnType<typeof mapStateToProps> & ReturnTy
 
 const HomePageComponent: React.FC<PropsType> = (props) => {
   // 高阶组件
-  const { t, loading, productList, error, fetchStart, fetchSuccess, fetchFail } = props;
+  const { t, loading, productList, error, getProductLists } = props;
 
   const getProductList = async () => {
-    fetchStart();
-    try {
-      const { data } = await axios.post('http://127.0.0.1:7001/api/product/lists');
-      fetchSuccess(data.data);
-    } catch ({ message }) {
-      fetchFail(message);
-    }
+    getProductLists();
   };
 
   useEffect(() => {
