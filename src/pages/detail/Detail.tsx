@@ -6,25 +6,36 @@ import { Header, Footer, ProductIntro, ProductComments } from '../../components'
 import { PageContent } from './detail.style';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { commentMockData } from './mockup';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { useSelector } from '../../redux/hooks';
+import { productDetailSlice } from '../../redux/productDetail/productDetailSlice';
 
 export const Detail: React.FC = () => {
   let { id } = useParams();
   const { RangePicker } = DatePicker;
-  const [loading, setLoading] = useState<boolean>(true);
-  const [product, setProduct] = useState<any>(null);
-  const [error, setError] = useState<any>(null);
+
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [product, setProduct] = useState<any>(null);
+  // const [error, setError] = useState<any>(null);
+
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.productDetailSlice.loading);
+  const error = useSelector((state) => state.productDetailSlice.error);
+  const product = useSelector((state) => state.productDetailSlice.data);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
+      dispatch(productDetailSlice.actions.fetchStart());
       try {
         const { data } = await axios.post('http://127.0.0.1:7001/api/product/detail', { id });
-        setProduct(data?.data ?? null);
-        setLoading(false);
+        // setProduct(data?.data ?? null);
+        // setLoading(false);
+        dispatch(productDetailSlice.actions.fetchSuccess(data?.data));
       } catch (error: any) {
-        setError(error.response.data.message);
-        setLoading(false);
+        // setError(error.response.data.message);
+        // setLoading(false);
+        dispatch(productDetailSlice.actions.fetchError(error?.response?.data?.message ?? '获取产品详情失败'));
       }
     };
     fetchData();
