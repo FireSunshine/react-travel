@@ -8,7 +8,7 @@ import { ShoppingCartOutlined } from '@ant-design/icons';
 import { commentMockData } from './mockup';
 import { useDispatch } from 'react-redux';
 import { useSelector } from '../../redux/hooks';
-import { productDetailSlice } from '../../redux/productDetail/productDetailSlice';
+import { getProductDetail, productDetailSlice } from '../../redux/productDetail/productDetailSlice';
 
 export const Detail: React.FC = () => {
   let { id } = useParams();
@@ -24,21 +24,22 @@ export const Detail: React.FC = () => {
   const product = useSelector((state) => state.productDetailSlice.data);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // setLoading(true);
-      dispatch(productDetailSlice.actions.fetchStart());
-      try {
-        const { data } = await axios.post('http://127.0.0.1:7001/api/product/detail', { id });
-        // setProduct(data?.data ?? null);
-        // setLoading(false);
-        dispatch(productDetailSlice.actions.fetchSuccess(data?.data));
-      } catch (error: any) {
-        // setError(error.response.data.message);
-        // setLoading(false);
-        dispatch(productDetailSlice.actions.fetchError(error?.response?.data?.message ?? '获取产品详情失败'));
-      }
-    };
-    fetchData();
+    // const fetchData = async () => {
+    //   // setLoading(true);
+    //   dispatch(productDetailSlice.actions.fetchStart());
+    //   try {
+    //     const { data } = await axios.post('http://127.0.0.1:7001/api/product/detail', { id });
+    //     // setProduct(data?.data ?? null);
+    //     // setLoading(false);
+    //     dispatch(productDetailSlice.actions.fetchSuccess(data?.data));
+    //   } catch (error: any) {
+    //     // setError(error.response.data.message);
+    //     // setLoading(false);
+    //     dispatch(productDetailSlice.actions.fetchError(error?.response?.data?.message ?? '获取产品详情失败'));
+    //   }
+    // };
+    // fetchData();
+    dispatch(getProductDetail(id));
   }, [id]);
   if (error) {
     return <div>网站出错：{error}</div>;
