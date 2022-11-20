@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Typography, Spin } from 'antd';
-import { Header, Footer, SideMenu, Carousel, ProductCollection, BusinessPartners } from '../../components';
+import { SideMenu, Carousel, ProductCollection, BusinessPartners } from '../../components';
+import { MainLayout } from '../../layouts/mainLayout';
 import sideImage from '../../assets/images/sider_2019_12-09.png';
 import sideImage2 from '../../assets/images/sider_2019_02-04.png';
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
-import styles from './HomePage.module.css';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
@@ -46,8 +46,7 @@ const HomePageComponent: React.FC<PropsType> = (props) => {
   }
   return (
     <Spin spinning={loading}>
-      <Header />
-      <div className={styles['page-content']}>
+      <MainLayout>
         <Row style={{ marginTop: 20 }}>
           <Col span={6}>
             <SideMenu />
@@ -84,8 +83,7 @@ const HomePageComponent: React.FC<PropsType> = (props) => {
           products={productList.filter((item) => item.categoryId === '3')}
         />
         <BusinessPartners />
-      </div>
-      <Footer />
+      </MainLayout>
     </Spin>
   );
 };

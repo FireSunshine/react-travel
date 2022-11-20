@@ -2,10 +2,11 @@ import { Spin } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { Header, Footer, Carousel, ProductList } from '../../components';
+import { Carousel, ProductList } from '../../components';
+import { MainLayout } from '../../layouts/mainLayout';
 import { useSelector } from '../../redux/hooks';
 import { searchProduct } from '../../redux/productSearch/productSearchSlice';
-import { PageContent } from './search.style';
+import { PageContainer } from './search.style';
 
 export const Search: React.FC = () => {
   const { keywords } = useParams();
@@ -31,16 +32,16 @@ export const Search: React.FC = () => {
 
   return (
     <Spin spinning={loading}>
-      <Header />
-      <PageContent>
-        <div className="product-list-container">
-          <Carousel />
-        </div>
-        <div className="product-list-container">
-          <ProductList productData={productList} pagination={pagination} onPageChange={onPageChange} />
-        </div>
-      </PageContent>
-      <Footer />
+      <MainLayout>
+        <PageContainer>
+          <div className="product-list-container">
+            <Carousel />
+          </div>
+          <div className="product-list-container">
+            <ProductList productData={productList} pagination={pagination} onPageChange={onPageChange} />
+          </div>
+        </PageContainer>
+      </MainLayout>
     </Spin>
   );
 };

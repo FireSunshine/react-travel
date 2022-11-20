@@ -1,10 +1,8 @@
-.App {
-  background-color: rgba(0, 0, 0, 0.08);
-}
+import styled from '@emotion/styled';
 
-.page-content {
+export const PageContent = styled.div`
   width: 1230px;
   margin-left: auto;
   margin-right: auto;
   min-height: 85vh;
-}
+`;
