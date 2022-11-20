@@ -1,10 +1,21 @@
 import React from 'react';
 import { FormBox } from './register.style';
-import { Button, Checkbox, Input, Form } from 'antd';
+import { Button, Checkbox, Input, Form, message } from 'antd';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const RegisterFrom = () => {
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const navigate = useNavigate();
+  const onFinish = async (values: any) => {
+    try {
+      await axios.post('http://127.0.0.1:7001/api/user/register', {
+        username: values.username,
+        password: values.password
+      });
+      navigate('/signin');
+    } catch (error: any) {
+      message.error(error.response.data.message);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -46,7 +57,7 @@ export const RegisterFrom = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" block>
           Submit
         </Button>
       </Form.Item>
