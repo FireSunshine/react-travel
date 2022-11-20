@@ -4,7 +4,7 @@ import logo from '../../assets/images/logo.svg';
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Input, Layout, Menu, message, Typography } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from '../../redux/hooks';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -17,6 +17,8 @@ export const Header = () => {
   const [langeuageArr, setLangeuageArr] = useState<{ label: string; key: string }[]>();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { keywords } = useParams();
+  const [searchValue, setSearchValue] = useState<string | null>(null);
 
   useEffect(() => {
     setLangeuageArr([
@@ -50,12 +52,21 @@ export const Header = () => {
             {t('header.title')}
           </Typography.Title>
         </span>
-        <Input.Search placeholder="想去哪" enterButton className={styles['search-input']} />
+        <Input.Search
+          placeholder="想去哪"
+          enterButton
+          className={styles['search-input']}
+          value={searchValue ?? keywords}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onSearch={(keywords) => {
+            navigate('/search/' + keywords);
+          }}
+        />
         <Button.Group className={styles['button-group']}>
-          <Button icon={<UserOutlined />} style={{ borderRadius: '25px' }} onClick={() => navigate('signin')}>
+          <Button icon={<UserOutlined />} style={{ borderRadius: '25px' }} onClick={() => navigate('/signin')}>
             {t('header.signin')}
           </Button>
-          <Button style={{ margin: '0 15px' }} type="text" onClick={() => navigate('register')}>
+          <Button style={{ margin: '0 15px' }} type="text" onClick={() => navigate('/register')}>
             {t('header.register')}
           </Button>
           <Dropdown.Button overlay={<Menu items={langeuageArr} onClick={menuClickHandler} />} icon={<GlobalOutlined />}>

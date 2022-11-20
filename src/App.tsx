@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./App.module.css";
-import { HomePage, OntFound, Register, SignIn, Detail } from "./pages";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from 'react';
+import styles from './App.module.css';
+import { HomePage, OntFound, Register, SignIn, Detail, Search } from './pages';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -12,6 +12,8 @@ function App() {
           <Route path="/Register" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/search/:keywords" element={<Search />} />
+          <Route path="/search/" element={<Search />} />
           <Route path="*" element={<OntFound />} />
         </Routes>
       </BrowserRouter>

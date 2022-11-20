@@ -6,11 +6,13 @@ import { actionLog } from './middlewares/actionLog';
 // 兼容redux
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { productDetailSlice } from './productDetail/productDetailSlice';
+import { productSearchSlice } from './productSearch/productSearchSlice';
 
 const rootReducer = combineReducers({
   language: languageReducer,
   recommendProducts: recommendProductsReducer,
-  productDetailSlice: productDetailSlice.reducer
+  productDetailSlice: productDetailSlice.reducer,
+  productSearchSlice: productSearchSlice.reducer
 });
 
 // const store = createStore(rootReducer, applyMiddleware(thunk, actionLog));

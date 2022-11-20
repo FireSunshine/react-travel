@@ -70,8 +70,8 @@ export const ProductIntro: React.FC<PropsType> = ({ name, description, price, im
       title: '线路评价',
       description: (
         <>
-          <Rate disabled defaultValue={5} />
-          <Typography.Text style={{ marginLeft: 10 }}>{5} 星</Typography.Text>
+          <Rate defaultValue={3} />
+          <Typography.Text style={{ marginLeft: 10 }}>{3} 星</Typography.Text>
         </>
       )
     }
