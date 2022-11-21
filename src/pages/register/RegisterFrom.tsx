@@ -52,13 +52,9 @@ export const RegisterFrom = () => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
       <Form.Item>
         <Button type="primary" htmlType="submit" block>
-          Submit
+          注册
         </Button>
       </Form.Item>
     </FormBox>
