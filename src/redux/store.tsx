@@ -7,12 +7,14 @@ import { actionLog } from './middlewares/actionLog';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { productDetailSlice } from './productDetail/productDetailSlice';
 import { productSearchSlice } from './productSearch/productSearchSlice';
+import { userSlice } from './user/userSlice';
 
 const rootReducer = combineReducers({
   language: languageReducer,
   recommendProducts: recommendProductsReducer,
   productDetailSlice: productDetailSlice.reducer,
-  productSearchSlice: productSearchSlice.reducer
+  productSearchSlice: productSearchSlice.reducer,
+  userSlice: userSlice.reducer
 });
 
 // const store = createStore(rootReducer, applyMiddleware(thunk, actionLog));
