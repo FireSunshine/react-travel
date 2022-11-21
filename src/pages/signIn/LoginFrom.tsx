@@ -15,7 +15,7 @@ export const LoginFrom = () => {
   const token = useSelector((state) => state.userSlice.token);
 
   useEffect(() => {
-    if (token !== null) {
+    if (token && token !== null) {
       navigate('/');
     }
   }, [token]);

@@ -9,6 +9,12 @@ import { useSelector } from '../../redux/hooks';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { addLanguageActionCreator, changeLanguageActionCreator } from '../../redux/language/languageAction';
+import jwt_decode, { JwtPayload as DefaultJwtPayload } from 'jwt-decode';
+import { userSlice } from '../../redux/user/userSlice';
+
+interface JwtPayload extends DefaultJwtPayload {
+  username: string;
+}
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -19,6 +25,24 @@ export const Header = () => {
   const dispatch = useDispatch();
   const { keywords } = useParams();
   const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [userName, setUserName] = useState('');
+  const token = useSelector((state) => state.userSlice.token);
+
+  useEffect(() => {
+    if (token) {
+      const jwt_token = jwt_decode<JwtPayload>(token);
+      console.log(jwt_token);
+
+      setUserName(jwt_token.username);
+    }
+  }, [token]);
+
+  // 退出登录
+  const onLogout = () => {
+    dispatch(userSlice.actions.logOut());
+    navigate('/');
+    window.location.reload(); // 可加可不加
+  };
 
   useEffect(() => {
     setLangeuageArr([
@@ -63,12 +87,27 @@ export const Header = () => {
           }}
         />
         <Button.Group className={styles['button-group']}>
-          <Button icon={<UserOutlined />} style={{ borderRadius: '25px' }} onClick={() => navigate('/signin')}>
-            {t('header.signin')}
-          </Button>
-          <Button style={{ margin: '0 15px' }} type="text" onClick={() => navigate('/register')}>
-            {t('header.register')}
-          </Button>
+          {token ? (
+            <>
+              <Button>{t('header.shoppingCart')}</Button>
+              <Button type="link">
+                {t('header.welcome')}
+                {userName}
+              </Button>
+              <Button onClick={onLogout} type="link" danger>
+                {t('header.signOut')}
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button icon={<UserOutlined />} style={{ borderRadius: '25px' }} onClick={() => navigate('/signin')}>
+                {t('header.signin')}
+              </Button>
+              <Button style={{ margin: '0 15px' }} type="text" onClick={() => navigate('/register')}>
+                {t('header.register')}
+              </Button>
+            </>
+          )}
           <Dropdown.Button overlay={<Menu items={langeuageArr} onClick={menuClickHandler} />} icon={<GlobalOutlined />}>
             {language === 'zh' ? '中文' : 'English'}
           </Dropdown.Button>

@@ -20,14 +20,20 @@ export const signIn: any = createAsyncThunk(
       username: paramaters.username,
       pawweord: paramaters.password
     });
-    return res.data.token;
+    return res.data.data.token;
   }
 );
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logOut: (state) => {
+      state.error = null;
+      state.loading = false;
+      state.token = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signIn.pending, (state) => {
