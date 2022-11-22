@@ -2,9 +2,7 @@ import React from 'react';
 import { RegisterFrom } from './RegisterFrom';
 import { UserLayout } from '../../layouts/userLayout';
 
-export const Register = (props) => {
-  console.log(props);
-
+export const Register = () => {
   return (
     <UserLayout>
       <RegisterFrom />
