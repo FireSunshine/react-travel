@@ -7,7 +7,7 @@
   height: 60px;
   line-height: 60px;
   width: 88%;
-  min-width: 1200px;
+  min-width: 1300px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -41,7 +41,7 @@
 .title {
   line-height: 64px !important;
   display: inline;
-  font-family: "IBMPlexSerif-BoldItalic";
+  font-family: 'IBMPlexSerif-BoldItalic';
   font-style: italic;
   color: #03a9f4 !important;
 }
