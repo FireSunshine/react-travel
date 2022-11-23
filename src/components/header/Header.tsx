@@ -31,8 +31,6 @@ export const Header = () => {
   useEffect(() => {
     if (token) {
       const jwt_token = jwt_decode<JwtPayload>(token);
-      console.log(jwt_token);
-
       setUserName(jwt_token.username);
     }
   }, [token]);
@@ -87,9 +85,11 @@ export const Header = () => {
           }}
         />
         <Button.Group className={styles['button-group']}>
+          <Button style={{ margin: '0 15px' }} onClick={() => navigate('/shoppingCart')}>
+            {t('header.shoppingCart')}
+          </Button>
           {token ? (
             <>
-              <Button>{t('header.shoppingCart')}</Button>
               <Button type="link">
                 {t('header.welcome')}
                 {userName}
