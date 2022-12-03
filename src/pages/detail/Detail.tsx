@@ -10,6 +10,7 @@ import { commentMockData } from './mockup';
 import { useDispatch } from 'react-redux';
 import { useSelector } from '../../redux/hooks';
 import { getProductDetail, productDetailSlice } from '../../redux/productDetail/productDetailSlice';
+import { addShoppingCart } from '../../redux/shoppingCart/shoppingCartSlice';
 
 export const Detail: React.FC = () => {
   let { id } = useParams();
@@ -19,10 +20,15 @@ export const Detail: React.FC = () => {
   // const [product, setProduct] = useState<any>(null);
   // const [error, setError] = useState<any>(null);
 
+  // 产品详情
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.productDetailSlice.loading);
   const error = useSelector((state) => state.productDetailSlice.error);
   const product = useSelector((state) => state.productDetailSlice.data);
+
+  // 购物车
+  const token = useSelector((state) => state.userSlice.token);
+  const shoppingCartLoading = useSelector((state) => state.shoppingCartSlice.loading);
 
   useEffect(() => {
     // const fetchData = async () => {
@@ -63,7 +69,8 @@ export const Detail: React.FC = () => {
               <Col span={11}>
                 <Space direction="vertical">
                   <Button
-                    loading={false}
+                    loading={shoppingCartLoading}
+                    onClick={() => dispatch(addShoppingCart({ token, productId: product.id }))}
                     type="primary"
                     shape="round"
                     icon={<ShoppingCartOutlined />}

@@ -18,19 +18,24 @@ interface JwtPayload extends DefaultJwtPayload {
 
 export const Header = () => {
   const navigate = useNavigate();
-  const language = useSelector((state) => state.language.language);
-  const langeuageList = useSelector((state) => state.language.languageList);
-  const [langeuageArr, setLangeuageArr] = useState<{ label: string; key: string }[]>();
-  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { keywords } = useParams();
+  const language = useSelector((state) => state.language.language); // store当前语言
+  const langeuageList = useSelector((state) => state.language.languageList); // store语言列表
+  const [langeuageArr, setLangeuageArr] = useState<{ label: string; key: string }[]>(); // 语言列表
+  const { t } = useTranslation(); // 语言
+  const { keywords } = useParams(); // 关键字搜索
   const [searchValue, setSearchValue] = useState<string | null>(null);
-  const [userName, setUserName] = useState('');
-  const token = useSelector((state) => state.userSlice.token);
+
+  const [userName, setUserName] = useState(''); // 用户名
+  const token = useSelector((state) => state.userSlice.token); // 获取token
+
+  const shoppingCarts = useSelector((state) => state.shoppingCartSlice.carts); // 购物车列表
+
+  const shoppingCartLoading = useSelector((state) => state.shoppingCartSlice.loading);
 
   useEffect(() => {
     if (token) {
-      const jwt_token = jwt_decode<JwtPayload>(token);
+      const jwt_token = jwt_decode<JwtPayload>(token); //解析token，获取用户名
       setUserName(jwt_token.username);
     }
   }, [token]);
@@ -43,6 +48,7 @@ export const Header = () => {
   };
 
   useEffect(() => {
+    // 设置语言列表
     setLangeuageArr([
       ...langeuageList.map((l) => {
         return {
@@ -54,6 +60,7 @@ export const Header = () => {
     ]);
   }, [langeuageList]);
 
+  // 切换语言、添加新语言
   const menuClickHandler = (e) => {
     if (e.key.includes('new_lange')) {
       message.info('暂不支持新语言');
@@ -85,8 +92,12 @@ export const Header = () => {
           }}
         />
         <Button.Group className={styles['button-group']}>
-          <Button style={{ margin: '0 15px' }} onClick={() => navigate('/shoppingCart')}>
-            {t('header.shoppingCart')}
+          <Button
+            style={{ margin: '0 15px' }}
+            loading={token ? shoppingCartLoading : false}
+            onClick={() => navigate('/shoppingCart')}
+          >
+            {t('header.shoppingCart')}({shoppingCarts?.length ?? 0})
           </Button>
           {token ? (
             <>

@@ -4,7 +4,7 @@ import { Button, Checkbox, Input, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from '../../redux/hooks';
 import { useDispatch } from 'react-redux';
-import { signIn } from '../../redux/user/userSlice';
+import { signIn, userSlice } from '../../redux/user/userSlice';
 
 export const LoginFrom = () => {
   const navigate = useNavigate();
@@ -15,12 +15,17 @@ export const LoginFrom = () => {
   const token = useSelector((state) => state.userSlice.token);
 
   useEffect(() => {
+    if (localStorage.getItem('isLogin') === 'false') {
+      dispatch(userSlice.actions.logOut());
+      return;
+    }
     if (token && token !== null) {
       navigate('/');
     }
   }, [token]);
 
   const onFinish = async (values: any) => {
+    localStorage.removeItem('isLogin');
     dispatch(
       signIn({
         username: values.username,

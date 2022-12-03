@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { isLogin } from '../../utils';
 
 interface ShoppingCarttate {
   loading: boolean;
@@ -17,12 +18,17 @@ const initialState: ShoppingCarttate = {
 export const getShoppingCart: any = createAsyncThunk(
   'shoppingCart/getShoppingCart',
   async (token: string, thunkAPI) => {
-    const res = await axios.post('', {
-      headers: {
-        Authorization: token
+    const res = await axios.post(
+      'http://127.0.0.1:7001/api/shoppingCart/lists',
+      {},
+      {
+        headers: {
+          token
+        }
       }
-    });
-    return res?.data?.data?.shoppingCartItems;
+    );
+    isLogin(res?.data?.status);
+    return res?.data?.data;
   }
 );
 
@@ -31,35 +37,36 @@ export const addShoppingCart: any = createAsyncThunk(
   'shoppingCart/addShoppingCart',
   async (parameters: { token: string; productId: string }, thunkAPI) => {
     const res = await axios.post(
-      '',
+      'http://127.0.0.1:7001/api/shoppingCart/add',
       {
         productId: parameters.productId
       },
       {
         headers: {
-          Authorization: parameters.token
+          token: parameters.token
         }
       }
     );
-    return res?.data?.data?.shoppingCart;
+    return res?.data?.data;
   }
 );
 
 // 删除购物车
 export const clearShoppingCart: any = createAsyncThunk(
   'shoppingCart/clearShoppingCart',
-  async (paramaters: { productIds: any[]; token: string }, thunkAPI) => {
-    await axios.post(
-      '',
+  async (paramaters: { cartIds: any[]; token: string }, thunkAPI) => {
+    const res = await axios.post(
+      'http://127.0.0.1:7001/api/shoppingCart/delCart',
       {
-        productIds: paramaters.productIds
+        cartIds: paramaters.cartIds
       },
       {
         headers: {
-          Authorization: paramaters.token
+          token: paramaters.token
         }
       }
     );
+    return res?.data?.data;
   }
 );
 

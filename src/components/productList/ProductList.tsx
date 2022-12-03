@@ -69,7 +69,7 @@ export const ProductList: React.FC<PropsType> = ({ productData, pagination, onPa
       }
       renderItem={(item) => (
         <List.Item
-          key={item.title}
+          key={item.id}
           actions={[
             <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
             <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,

@@ -10,6 +10,7 @@ import { productSearchSlice } from './productSearch/productSearchSlice';
 import { userSlice } from './user/userSlice';
 import { persistStore, persistReducer, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { shoppingCartSlice } from './shoppingCart/shoppingCartSlice';
 
 const persistConfig = {
   key: 'root',
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   recommendProducts: recommendProductsReducer,
   productDetailSlice: productDetailSlice.reducer,
   productSearchSlice: productSearchSlice.reducer,
-  userSlice: userSlice.reducer
+  userSlice: userSlice.reducer,
+  shoppingCartSlice: shoppingCartSlice.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
