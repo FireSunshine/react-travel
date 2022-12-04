@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ProductList, PaymentCard } from '../../components';
 import { MainLayout } from '../../layouts/mainLayout';
-import { Row, Col, Affix } from 'antd';
+import { Row, Col, Affix, message } from 'antd';
 import { PageContent } from './shoppingCart.style';
 import { useDispatch } from 'react-redux';
 import { useSelector } from '../../redux/hooks';
@@ -64,7 +64,7 @@ export const ShoppingCart = () => {
                   originalPrice={shoppingCarts?.map((item) => item.price * 1).reduce((a, b) => a + b, 0)}
                   price={shoppingCarts?.map((item) => item.price * 1).reduce((a, b) => a + b, 0)}
                   loading={loading}
-                  onCheckout={() => navigate('/placeOrder')}
+                  onCheckout={() => message.success('下单成功')}
                   onShoppingCartClear={() => {
                     dispatch(clearShoppingCart({ token, cartIds: shoppingCarts?.map((item) => item.id) }));
                     setCartList([]);
