@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from './App.module.css';
-import { HomePage, OntFound, Register, SignIn, Detail, Search, ShoppingCart } from './pages';
+import { HomePage, OntFound, Register, SignIn, Detail, Search, ShoppingCart, PlaceOrder } from './pages';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from './redux/hooks';
 import { useDispatch } from 'react-redux';
@@ -35,6 +35,10 @@ function App() {
           <Route
             path="/shoppingCart"
             element={<PrivateRoute isAuthenticated={token && token !== null} component={ShoppingCart} />}
+          />
+          <Route
+            path="/placeOrder"
+            element={<PrivateRoute isAuthenticated={token && token !== null} component={PlaceOrder} />}
           />
           <Route path="*" element={<OntFound />} />
         </Routes>

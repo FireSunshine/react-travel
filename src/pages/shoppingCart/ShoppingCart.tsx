@@ -7,8 +7,10 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from '../../redux/hooks';
 import { clearShoppingCart } from '../../redux/shoppingCart/shoppingCartSlice';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const ShoppingCart = () => {
+  const navigate = useNavigate();
   const [cartlist, setCartList] = useState([]); // 分页查询购物车列表
   const [pagination, setPagination] = useState({
     pageNum: 1,
@@ -62,7 +64,7 @@ export const ShoppingCart = () => {
                   originalPrice={shoppingCarts?.map((item) => item.price * 1).reduce((a, b) => a + b, 0)}
                   price={shoppingCarts?.map((item) => item.price * 1).reduce((a, b) => a + b, 0)}
                   loading={loading}
-                  onCheckout={() => {}}
+                  onCheckout={() => navigate('/placeOrder')}
                   onShoppingCartClear={() => {
                     dispatch(clearShoppingCart({ token, cartIds: shoppingCarts?.map((item) => item.id) }));
                     setCartList([]);
